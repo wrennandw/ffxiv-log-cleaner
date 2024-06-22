@@ -1,0 +1,3 @@
+This readme is mostly here to keep git from breaking.
+
+To clean logs, put the raw log files in this folder. They'll be read as UTF-8 text so if they're in a rich text format like .docx it might break things. Files currently aren't moved from this folder after they're parsed, so if you run the parser again without moving them you'll wind up with duplicates.

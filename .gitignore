@@ -162,5 +162,9 @@ cython_debug/
 #.idea/
 
 # Don't store test logs
-logs/raw/*
-logs/clean/*
+logs/raw/**
+logs/clean/**
+
+# Keep the folders and readmes
+!logs/raw/directions.txt
+!logs/clean/directions.txt

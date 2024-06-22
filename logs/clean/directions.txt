@@ -1,0 +1,3 @@
+This readme is mostly here to keep git from breaking.
+
+Your clean logs will go here, with name format '[Clean]_ORIGINAL_FILENAME.txt'
