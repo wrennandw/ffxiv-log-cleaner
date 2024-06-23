@@ -1,4 +1,5 @@
 import os
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 # Basic log data structure
 class EventLog:
@@ -46,17 +47,18 @@ def cleaner(data):
         _bounds = []
         
         # Find the start and end of the surname, excluding the first letter
-        _bounds.append(e[1].find(' ')+2)
-        _bounds.append(e[1].find(' ', _bounds[0]+1)-1)
+        _bounds.append(e[1].find(' '))
+        _bounds.append(e[1].find(' ', _bounds[0]+1))
         
         # Check if there's a server in the surname and remove it
-        for i in range(_bounds[0], _bounds[1]):
+        for i in range(_bounds[0]+2, _bounds[1]-1):
             if e[1][i].isupper():
-                print(f'{e[1][i:_bounds[1]]} {_bounds[0]}-{_bounds[1]}')
                 data.log_data[e[0]] = data.log_data[e[0]].replace(
-                    e[1][i:_bounds[1]],'')
-            break
+                    e[1][i:_bounds[1]],':')
+                break
     
+    # Add newlines to each line
+    data.log_data = [f'{e}\n\n' for e in data.log_data]
 
 
 # Load all logs in raw directory
@@ -65,5 +67,7 @@ logs = loader()
 # Clean all logs
 for e in logs:
     cleaner(e)
-    print(e.filename)
-    print(e.log_data)
+    _rawfile = str(e.filename)
+    with open(f'./logs/clean/[Clean]{_rawfile}', 'w', encoding='utf-8') as _cleanfile:
+        for line in e.log_data:
+           _cleanfile.write(line)
