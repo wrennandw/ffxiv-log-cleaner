@@ -32,7 +32,6 @@ def cleaner(data):
     # Remove class markers and hearts at start of each string
     # LS/CWLS tags are left intact for clarity
     _clean =[]
-
     for e in data.log_data:
         if e[0] != '[':
             _clean.append(e.split(' ', 1)[-1])
@@ -67,6 +66,8 @@ logs = loader()
 # Clean all logs
 for e in logs:
     cleaner(e)
+    
+    # Save clean logs
     _rawfile = str(e.filename)
     with open(f'./logs/clean/[Clean]{_rawfile}', 'w', encoding='utf-8') as _cleanfile:
         for line in e.log_data:
