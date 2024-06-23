@@ -13,11 +13,11 @@ def loader():
     _dir = os.listdir('./logs/raw')
     
     # Load each log and instantiate it as an object
-    for e in _dir:
-        if e != 'directions.txt':
-            with open(f'./logs/raw/{e}', encoding='utf-8') as _text:
+    for filename in _dir:
+        if filename != 'directions.txt':
+            with open(f'./logs/raw/{filename}', encoding='utf-8') as _text:
                 _logs_data = _text.read()
-                _log_objects.append(EventLog(e, _logs_data))
+                _log_objects.append(EventLog(filename, _logs_data))
                 
     return _log_objects
 
