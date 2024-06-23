@@ -33,10 +33,10 @@ def cleaner(data):
     # LS/CWLS tags are left intact for clarity
     _clean =[]
     for e in data.log_data:
-        if e[0] != '[':
-            _clean.append(e.split(' ', 1)[-1])
-        else:
+        if e[0] == '[' or e[0].isalpha():
             _clean.append(e)
+        else:
+            _clean.append(e.split(' ', 1)[-1])
     
     data.log_data = [e.replace('♥', '') for e in _clean]
 
@@ -53,7 +53,7 @@ def cleaner(data):
         for i in range(_bounds[0]+2, _bounds[1]-1):
             if e[1][i].isupper():
                 data.log_data[e[0]] = data.log_data[e[0]].replace(
-                    e[1][i:_bounds[1]],':')
+                    e[1][i:_bounds[1]-1],'')
                 break
     
     # Add newlines to each line
