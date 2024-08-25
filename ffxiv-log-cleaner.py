@@ -52,8 +52,12 @@ def cleaner(data):
         # Check if there's a server in the surname and remove it
         for i in range(_bounds[0]+2, _bounds[1]-1):
             if e[1][i].isupper():
-                data.log_data[e[0]] = data.log_data[e[0]].replace(
-                    e[1][i:_bounds[1]-1],'')
+                if e[1][_bounds[1]-1] == ':':
+                    data.log_data[e[0]] = data.log_data[e[0]].replace(
+                    e[1][i:_bounds[1]-1],'')    
+                else:
+                    data.log_data[e[0]] = data.log_data[e[0]].replace(
+                    e[1][i:_bounds[1]],'')
                 break
     
     # Add newlines to each line
