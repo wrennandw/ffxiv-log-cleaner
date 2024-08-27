@@ -7,6 +7,10 @@ class EventLog:
         self.filename = filename
         self.log_data = log_data
 
+serverlist=['Adamantoise', 'Cactuar', 'Faerie', 'Gilgamesh', 'Jenova', 'Midgardsormr', 'Sargantanas', 'Siren',
+            'Balmung', 'Brynhildr', 'Coeurl', 'Diabolos', 'Goblin', 'Malboro', 'Mateus', 'Zalera',
+            'Cuchulainn', 'Golem', 'Halicarnassus', 'Kraken', 'Maduin', 'Marilith', 'Rafflesia', 'Seraph',
+            'Behemoth', 'Excalibur', 'Exodus', 'Famfrit', 'Hyperion', 'Lamia', 'Leviathan', 'Ultros']
 
 def loader():
     _log_objects = []
@@ -46,19 +50,30 @@ def cleaner(data):
         _bounds = []
         
         # Find the start and end of the surname, excluding the first letter
-        _bounds.append(e[1].find(' '))
-        _bounds.append(e[1].find(' ', _bounds[0]+1))
+        #_bounds.append(e[1].find(' '))
+        #_bounds.append(e[1].find(' ', _bounds[0]+1))
         
         # Check if there's a server in the surname and remove it
-        for i in range(_bounds[0]+2, _bounds[1]-1):
-            if e[1][i].isupper():
-                if e[1][_bounds[1]-1] == ':':
-                    data.log_data[e[0]] = data.log_data[e[0]].replace(
-                    e[1][i:_bounds[1]-1],'')    
-                else:
-                    data.log_data[e[0]] = data.log_data[e[0]].replace(
-                    e[1][i:_bounds[1]],'')
-                break
+        _string = ''
+        _has_colon = False
+        for i in e[1]:
+            if i.isupper() and e[1].index(i) != 0 and e[1][e[1].index(i)-1].isalpha():
+                _bounds.append(e[1].index(i))
+                _bounds.append(e[1].find(' ', _bounds[0]+1))
+                for j in range(_bounds[0], _bounds[1]):
+                    if e[1][j].isalpha():
+                        _string = _string + e[1][j]
+                    elif e[1][j] == ':':
+                        _has_colon = True
+
+                if _string in serverlist:
+                    if not _has_colon:
+                        data.log_data[e[0]] = data.log_data[e[0]].replace(
+                        e[1][_bounds[0]:_bounds[1]],'')
+                    else:
+                        data.log_data[e[0]] = data.log_data[e[0]].replace(
+                        e[1][_bounds[0]:_bounds[1]],':')
+                _string = ''
     
     # Add newlines to each line
     data.log_data = [f'{e}\n\n' for e in data.log_data]
