@@ -48,12 +48,6 @@ def cleaner(data):
     _lines = enumerate(data.log_data)
     for e in _lines:
         _bounds = []
-        
-        # Find the start and end of the surname, excluding the first letter
-        #_bounds.append(e[1].find(' '))
-        #_bounds.append(e[1].find(' ', _bounds[0]+1))
-        
-        # Check if there's a server in the surname and remove it
         _string = ''
         _has_colon = False
         for i in e[1]:
