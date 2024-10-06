@@ -1,4 +1,5 @@
 import os
+
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 # Basic log data structure
@@ -37,7 +38,9 @@ def cleaner(data):
     # LS/CWLS tags are left intact for clarity
     _clean =[]
     for e in data.log_data:
-        if e[0] == '[' or e[0].isalpha():
+        if e[0] == '[' and e[1] == 'P':
+            _clean.append(e.split(' ', 1)[-1])
+        elif e[0] == '[' or e[0].isalpha():
             _clean.append(e)
         else:
             _clean.append(e.split(' ', 1)[-1])
