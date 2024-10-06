@@ -40,6 +40,8 @@ def cleaner(data):
     for e in data.log_data:
         if e[0] == '[' and e[1] == 'P':
             _clean.append(e.split(' ', 1)[-1])
+        elif e[0] =='[' and e[1] == 'E':
+            _clean.append(e.split(']', 1)[-1])
         elif e[0] == '[' or e[0].isalpha():
             _clean.append(e)
         else:
