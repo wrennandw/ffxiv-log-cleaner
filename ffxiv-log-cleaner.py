@@ -38,16 +38,21 @@ def cleaner(data):
     # LS/CWLS tags are left intact for clarity
     _clean =[]
     for e in data.log_data:
-        if e[0] == '[' and e[1] == 'P':
+        if e[0] == '[' and e[1] == 'P':         # Remove party tags
             _clean.append(e.split(' ', 1)[-1])
-        elif e[0] =='[' and e[1] == 'E':
+        elif e[0] =='[' and e[1] == 'E':        # Remove emote tags
             _clean.append(e.split(']', 1)[-1])
-        elif e[0] == '[' or e[0].isalpha():
+        elif e[0] == '[' or e[0].isalpha():     # Leave the other tags alone
             _clean.append(e)
         else:
             _clean.append(e.split(' ', 1)[-1])
     
-    data.log_data = [e.replace('♥', '') for e in _clean]
+    #data.log_data = [e.replace('♥', '') for e in _clean]
+    for sym in ['♥', '♠', '♣', '♦', '★', '▲', '●']:
+        if sym in _clean:
+            _clean = _clean.replace(sym, '')
+    
+    data.log_data = _clean
 
     # Remove server names
     _lines = enumerate(data.log_data)
